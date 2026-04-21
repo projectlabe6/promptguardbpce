@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# Env & secrets
+.env
+.env.*
+*.key
+secrets/
+
+# ML models
+models/
+*.bin
+*.pt
+*.safetensors
+
+# Logs & data
+logs/
+*.log
+audit.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+docker-compose.override.yml
