@@ -1,0 +1,52 @@
+{
+  "risk": {
+    "thresholds": {
+      "allow": 0.20,
+      "mask": 0.85
+    },
+    "weights": {
+      "EMAIL": 0.25,
+      "PHONE": 0.25,
+      "IBAN": 0.60,
+      "CREDIT_CARD": 0.75,
+      "DEFAULT": 0.20
+    }
+  },
+  "masking": {
+    "placeholders": {
+      "EMAIL": "[EMAIL]",
+      "PHONE": "[PHONE]",
+      "IBAN": "[IBAN]",
+      "CREDIT_CARD": "[CREDIT_CARD]",
+      "DEFAULT": "[REDACTED]"
+    },
+    "block_message": "[BLOCKED] Le contenu contient des informations trop sensibles."
+  },
+  "rules": {
+    "patterns": [
+      {
+        "type": "EMAIL",
+        "regex": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b"
+      },
+      {
+        "type": "PHONE",
+        "regex": "\\b(?:\\+33|0)[1-9](?:[\\s.-]?\\d{2}){4}\\b"
+      },
+      {
+        "type": "IBAN",
+        "regex": "\\b[A-Z]{2}\\d{2}[A-Z0-9]{4,30}\\b"
+      },
+      {
+        "type": "CREDIT_CARD",
+        "regex": "\\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})\\b"
+      }
+    ]
+  },
+  "audit": {
+    "enabled": true,
+    "file_path": "logs/audit.log"
+  },
+  "ml": {
+    "confidence": 0.90
+  }
+}
