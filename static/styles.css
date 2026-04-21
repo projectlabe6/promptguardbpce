@@ -20,6 +20,12 @@ header {
   margin-bottom: 2rem;
 }
 
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 header h1 {
   font-size: 1.8rem;
   font-weight: 700;
@@ -30,30 +36,8 @@ header h1 {
   margin-top: 0.25rem;
 }
 
-/* Input */
-.input-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-
-label {
-  font-weight: 600;
-}
-
-textarea {
-  width: 100%;
-  height: 140px;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  resize: vertical;
-}
-
+/* Buttons */
 button {
-  align-self: flex-start;
   padding: 0.6rem 1.4rem;
   background: #4f46e5;
   color: white;
@@ -63,8 +47,34 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background: #4338ca;
+button:hover { background: #4338ca; }
+
+.btn-secondary {
+  background: white;
+  color: #4f46e5;
+  border: 1px solid #4f46e5;
+}
+
+.btn-secondary:hover { background: #f0f0ff; }
+
+/* Input */
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+label { font-weight: 600; }
+
+textarea {
+  width: 100%;
+  height: 140px;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  resize: vertical;
 }
 
 /* Decision bar */
@@ -86,14 +96,11 @@ button:hover {
   font-size: 0.85rem;
 }
 
-.badge.ALLOW  { background: #d1fae5; color: #065f46; }
-.badge.MASK   { background: #fef3c7; color: #92400e; }
-.badge.BLOCK  { background: #fee2e2; color: #991b1b; }
+.badge.ALLOW { background: #d1fae5; color: #065f46; }
+.badge.MASK  { background: #fef3c7; color: #92400e; }
+.badge.BLOCK { background: #fee2e2; color: #991b1b; }
 
-#risk-score {
-  font-weight: 700;
-  font-size: 1rem;
-}
+#risk-score { font-weight: 700; font-size: 1rem; }
 
 /* Masked output */
 .masked-section {
@@ -104,10 +111,7 @@ button:hover {
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
-.masked-section h2 {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-}
+.masked-section h2 { font-size: 1rem; margin-bottom: 0.75rem; }
 
 .masked-output {
   font-family: monospace;
@@ -133,16 +137,9 @@ button:hover {
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
-.entities-section h2 {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-}
+.entities-section h2 { font-size: 1rem; margin-bottom: 0.75rem; }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 
 th {
   text-align: left;
@@ -152,11 +149,94 @@ th {
   font-weight: 600;
 }
 
-td {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid #f3f4f6;
+td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #f3f4f6; }
+tr:last-child td { border-bottom: none; }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
 }
 
-tr:last-child td {
-  border-bottom: none;
+.modal-overlay[hidden] { display: none; }
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  width: 480px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 { font-size: 1rem; font-weight: 700; }
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.25rem;
+}
+
+.modal-body {
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-hint { font-size: 0.85rem; color: #6b7280; margin-bottom: 1rem; }
+
+.weights-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.weight-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.weight-row label { font-size: 0.9rem; font-weight: 500; min-width: 140px; }
+
+.weight-row input {
+  width: 80px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+input[type="file"] {
+  font-size: 0.9rem;
+  color: #444;
 }

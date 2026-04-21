@@ -9,22 +9,30 @@
 <body>
   <div class="container">
     <header>
-      <h1>PromptGuard</h1>
-      <p class="subtitle">Désensibilisation de prompts et documents</p>
+      <div class="header-row">
+        <div>
+          <h1>PromptGuard</h1>
+          <p class="subtitle">Désensibilisation de prompts et documents</p>
+        </div>
+        <button id="btn-settings" class="btn-secondary">Réglages</button>
+      </div>
     </header>
 
     <main>
-      <!-- Zone de saisie -->
       <section class="input-section">
         <label for="input-text">Texte à analyser</label>
         <textarea id="input-text" placeholder="Saisissez votre texte ici..."></textarea>
         <button id="btn-analyze">Analyser</button>
       </section>
+      <section class="input-section">
+      <label for="input-file">Analyser un fichier (PDF, DOCX)</label>
+      <div class="file-row">
+        <input type="file" id="input-file" accept=".pdf,.docx,.doc,.txt" />
+        <button id="btn-analyze-file">Analyser le fichier</button>
+      </div>
+    </section>
 
-      <!-- Résultats -->
       <section class="results-section" id="results" hidden>
-
-        <!-- Score et décision -->
         <div class="decision-bar">
           <span class="label">Décision</span>
           <span id="badge-decision" class="badge"></span>
@@ -32,13 +40,11 @@
           <span id="risk-score"></span>
         </div>
 
-        <!-- Texte masqué -->
         <div class="masked-section">
           <h2>Texte désensibilisé</h2>
           <div id="masked-text" class="masked-output"></div>
         </div>
 
-        <!-- Tableau des entités -->
         <div class="entities-section">
           <h2>Entités détectées</h2>
           <table id="entities-table">
@@ -55,9 +61,29 @@
           </table>
           <p id="no-entities" hidden>Aucune entité détectée.</p>
         </div>
-
       </section>
     </main>
+  </div>
+
+  <!-- Modal réglages -->
+  <div id="modal-overlay" class="modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Réglages des poids</h2>
+        <button id="btn-close-modal" class="btn-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-hint">
+          Chaque poids est compris entre 0.0 et 1.0.
+          Plus le poids est élevé, plus l'entité contribue au score de risque.
+        </p>
+        <div id="weights-list" class="weights-list"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-save-weights">Enregistrer</button>
+        <button id="btn-cancel-modal" class="btn-secondary">Annuler</button>
+      </div>
+    </div>
   </div>
 
   <script src="/static/app.js"></script>
