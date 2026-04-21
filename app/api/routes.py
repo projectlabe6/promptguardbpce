@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, File, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 from app.config import get_weights, update_weights
+from app.pipeline.ingestion import ingest_file
 from app.pipeline.run_pipeline import run_pipeline
 from app.schemas.config import WeightsUpdate
 from app.schemas.sanitize import SanitizeRequest, SanitizeResponse
@@ -25,6 +26,15 @@ async def health():
 async def sanitize(request: SanitizeRequest):
     try:
         return run_pipeline(request.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/sanitize-file", response_model=SanitizeResponse)
+async def sanitize_file(file: UploadFile = File(...)):
+    try:
+        ingested = await ingest_file(file)
+        return run_pipeline(ingested.text)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
