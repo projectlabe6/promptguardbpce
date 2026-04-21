@@ -2,7 +2,9 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+from app.config import get_weights, update_weights
 from app.pipeline.run_pipeline import run_pipeline
+from app.schemas.config import WeightsUpdate
 from app.schemas.sanitize import SanitizeRequest, SanitizeResponse
 
 router = APIRouter()
@@ -25,3 +27,14 @@ async def sanitize(request: SanitizeRequest):
         return run_pipeline(request.text)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/config/weights")
+async def get_config_weights():
+    return get_weights()
+
+
+@router.post("/config/weights")
+async def update_config_weights(payload: WeightsUpdate):
+    update_weights(payload.weights)
+    return {"message": "Poids mis à jour"}
