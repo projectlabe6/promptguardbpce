@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptGuard</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>PromptGuard</h1>
+      <p class="subtitle">Désensibilisation de prompts et documents</p>
+    </header>
+
+    <main>
+      <!-- Zone de saisie -->
+      <section class="input-section">
+        <label for="input-text">Texte à analyser</label>
+        <textarea id="input-text" placeholder="Saisissez votre texte ici..."></textarea>
+        <button id="btn-analyze">Analyser</button>
+      </section>
+
+      <!-- Résultats -->
+      <section class="results-section" id="results" hidden>
+
+        <!-- Score et décision -->
+        <div class="decision-bar">
+          <span class="label">Décision</span>
+          <span id="badge-decision" class="badge"></span>
+          <span class="label">Score de risque</span>
+          <span id="risk-score"></span>
+        </div>
+
+        <!-- Texte masqué -->
+        <div class="masked-section">
+          <h2>Texte désensibilisé</h2>
+          <div id="masked-text" class="masked-output"></div>
+        </div>
+
+        <!-- Tableau des entités -->
+        <div class="entities-section">
+          <h2>Entités détectées</h2>
+          <table id="entities-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Valeur</th>
+                <th>Position</th>
+                <th>Confiance</th>
+                <th>Source</th>
+              </tr>
+            </thead>
+            <tbody id="entities-body"></tbody>
+          </table>
+          <p id="no-entities" hidden>Aucune entité détectée.</p>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
