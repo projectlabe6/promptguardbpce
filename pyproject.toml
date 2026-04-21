@@ -14,8 +14,10 @@ exclude = ["venv/", ".venv/", "build/", "dist/"]
 [tool.ruff]
 line-length = 88
 target-version = "py311"
-select = ["E", "F", "I"]
 exclude = ["venv/", ".venv/"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
