@@ -1,0 +1,88 @@
+[
+  {
+    "id": "test_001",
+    "text": "Contactez Jean Dupont à jean.dupont@gmail.com ou au 06 12 34 56 78.",
+    "expected_entities": [
+      { "type": "EMAIL", "value": "jean.dupont@gmail.com" },
+      { "type": "PHONE", "value": "06 12 34 56 78" },
+      { "type": "PII_PERSON", "value": "Jean Dupont" }
+    ]
+  },
+  {
+    "id": "test_002",
+    "text": "Mon IBAN est FR7630006000011234567890189 et ma carte est le 4111111111111111.",
+    "expected_entities": [
+      { "type": "IBAN", "value": "FR7630006000011234567890189" },
+      { "type": "CREDIT_CARD", "value": "4111111111111111" }
+    ]
+  },
+  {
+    "id": "test_003",
+    "text": "Le patient Pierre Martin souffre de diabète de type 2 et prend de la Metformine 1000mg.",
+    "expected_entities": [
+      { "type": "PII_PERSON", "value": "Pierre Martin" },
+      { "type": "MED_MALADIE", "value": "diabète de type 2" },
+      { "type": "MED_MEDICAMENT", "value": "Metformine" }
+    ]
+  },
+  {
+    "id": "test_004",
+    "text": "Marie Curie, directrice chez Société Générale, habite 15 avenue Victor Hugo Paris.",
+    "expected_entities": [
+      { "type": "PII_PERSON", "value": "Marie Curie" },
+      { "type": "PII_ORGANISATION", "value": "Société Générale" },
+      { "type": "PII_LOCATION", "value": "Paris" }
+    ]
+  },
+  {
+    "id": "test_005",
+    "text": "La clé API est api_key=sk-abc123xyz987 et le mot de passe est password=Secret123.",
+    "expected_entities": [
+      { "type": "API_KEY", "value": "api_key=sk-abc123xyz987" },
+      { "type": "PASSWORD", "value": "password=Secret123" }
+    ]
+  },
+  {
+    "id": "test_006",
+    "text": "Le patient âgé de 45 ans présente des symptômes de toux persistante et fièvre. Une radio pulmonaire est prescrite.",
+    "expected_entities": [
+      { "type": "MED_AGE", "value": "45 ans" },
+      { "type": "MED_SYMPTOMES", "value": "toux persistante" },
+      { "type": "MED_EXAMEN", "value": "radio pulmonaire" }
+    ]
+  },
+  {
+    "id": "test_007",
+    "text": "Bonjour, comment allez-vous aujourd hui ? Le temps est beau à Paris.",
+    "expected_entities": []
+  },
+  {
+    "id": "test_008",
+    "text": "Thomas Bernard travaille chez AXA Assurances. Son email pro est t.bernard@axa.fr et son fixe le 01 55 66 77 88.",
+    "expected_entities": [
+      { "type": "PII_PERSON", "value": "Thomas Bernard" },
+      { "type": "PII_ORGANISATION", "value": "AXA Assurances" },
+      { "type": "EMAIL", "value": "t.bernard@axa.fr" },
+      { "type": "PHONE", "value": "01 55 66 77 88" }
+    ]
+  },
+  {
+    "id": "test_009",
+    "text": "Ordonnance n 12345 pour Sophie Leroy, 32 ans. Traitement : Amoxicilline 500mg pendant 7 jours pour une angine bacterienne.",
+    "expected_entities": [
+      { "type": "PII_PERSON", "value": "Sophie Leroy" },
+      { "type": "MED_AGE", "value": "32 ans" },
+      { "type": "MED_MEDICAMENT", "value": "Amoxicilline" },
+      { "type": "MED_TRAITEMENT", "value": "Amoxicilline 500mg pendant 7 jours" },
+      { "type": "MED_MALADIE", "value": "angine bacterienne" }
+    ]
+  },
+  {
+    "id": "test_010",
+    "text": "Virement effectue depuis le compte FR7614508059400177901199 vers FR7630006000011234567890189 pour un montant de 2500 euros.",
+    "expected_entities": [
+      { "type": "IBAN", "value": "FR7614508059400177901199" },
+      { "type": "IBAN", "value": "FR7630006000011234567890189" }
+    ]
+  }
+]
