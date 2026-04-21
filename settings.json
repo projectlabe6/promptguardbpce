@@ -1,15 +1,19 @@
 {
   "risk": {
     "thresholds": {
-      "allow": 0.20,
+      "allow": 0.2,
       "mask": 0.85
     },
     "weights": {
-      "EMAIL": 0.25,
-      "PHONE": 0.25,
-      "IBAN": 0.60,
+      "EMAIL": 0.2,
+      "PHONE": 0.15,
+      "IBAN": 0.6,
       "CREDIT_CARD": 0.75,
-      "DEFAULT": 0.20
+      "DEFAULT": 0.2,
+      "PII_PERSON": 0.40,
+      "PII_ORGANISATION": 0.20,
+      "PII_LOCATION": 0.15,
+      "PII_MISC": 0.10
     }
   },
   "masking": {
@@ -18,7 +22,11 @@
       "PHONE": "[PHONE]",
       "IBAN": "[IBAN]",
       "CREDIT_CARD": "[CREDIT_CARD]",
-      "DEFAULT": "[REDACTED]"
+      "DEFAULT": "[REDACTED]",
+      "PII_PERSON": "[PERSON]",
+      "PII_ORGANISATION": "[ORG]",
+      "PII_LOCATION": "[LOCATION]",
+      "PII_MISC": "[MISC]"
     },
     "block_message": "[BLOCKED] Le contenu contient des informations trop sensibles."
   },
@@ -47,6 +55,6 @@
     "file_path": "logs/audit.log"
   },
   "ml": {
-    "confidence": 0.90
+    "confidence": 0.9
   }
 }

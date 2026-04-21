@@ -12,4 +12,10 @@ snapshot_download(
     local_dir="models/camembert-bio-gliner-v0.1",
 )
 
+print("Téléchargement de camembert-ner...")
+snapshot_download(
+    repo_id="Jean-Baptiste/camembert-ner",
+    local_dir="models/camembert-ner",
+)
+
 print("Modèles téléchargés.")
