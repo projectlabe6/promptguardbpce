@@ -4,6 +4,15 @@ from app.schemas.entity import Entity
 
 
 def _key(e: Entity) -> Tuple[str, int, int]:
+    """
+    Génère une clé unique permettant d’identifier une entité.
+
+    Args:
+        e (Entity): Entité à identifier.
+
+    Returns:
+        Tuple[str, int, int]: Tuple composé de (type, start, end).
+    """
     return (e.type, e.start, e.end)
 
 
