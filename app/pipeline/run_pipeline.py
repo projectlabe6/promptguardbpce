@@ -2,7 +2,7 @@ from app.pipeline.decision_engine import compute_decision
 from app.pipeline.entity_fusion import fuse_entities
 from app.pipeline.masking_engine import apply_masking
 from app.pipeline.ner_medical import detect_entities_medical
-from app.pipeline.ner_regex import detect_entities_general
+from app.pipeline.ner_pii import detect_entities_general
 from app.pipeline.rules_engine import detect_entities
 from app.schemas.sanitize import SanitizeResponse
 
