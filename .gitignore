@@ -7,12 +7,6 @@ venv/
 dist/
 build/
 
-# Env & secrets
-.env
-.env.*
-*.key
-secrets/
-
 # ML models
 models/
 *.bin
@@ -34,3 +28,14 @@ Thumbs.db
 
 # Docker
 docker-compose.override.yml
+
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+secrets/
+credentials/
+config/local/
+echo '!.env.example' >> .gitignore
