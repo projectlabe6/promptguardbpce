@@ -93,59 +93,74 @@ body {
 
 
 header {
-  background: var(--bg-header);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 0 2rem;
-  height: 56px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-header::after {
+header::before {
   content: '';
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--violet-600), var(--violet-400) 50%, transparent);
-  opacity: 0.6;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg,
+    var(--violet-600) 0%,
+    var(--violet-400) 30%,
+    #4f8ee8 60%,
+    var(--violet-300) 100%
+  );
 }
 
-.brand { display: flex; align-items: center; gap: 12px; height: 100%; }
+.brand { display: flex; align-items: center; gap: 14px; height: 100%; }
 
-.brand-mark {
-  width: 32px; height: 32px;
-  border-radius: var(--radius-sm);
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.08);
+.brand-logo {
+  width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  color: var(--color-primary);
 }
 
-.brand-mark svg { width: 16px; height: 16px; fill: white; }
+.brand-logo svg {
+  width: 32px; height: 36px;
+}
+
+.brand-text { display: flex; flex-direction: column; gap: 0; }
 
 header h1 {
-  font-size: 0.9rem; font-weight: 600;
-  color: var(--text-on-dark); margin: 0;
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--text-primary); margin: 0;
+  letter-spacing: -0.02em; line-height: 1.2;
 }
 
-header h1 span { color: var(--text-on-dark-muted); font-weight: 400; }
+.brand-subtitle {
+  font-size: 0.75rem; font-weight: 400;
+  color: var(--text-muted); margin: 0;
+  line-height: 1.3;
+}
 
 .header-settings-btn {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text-on-dark-muted);
-  padding: 7px 16px; border-radius: var(--radius-sm);
-  font-size: 0.8rem; font-family: var(--font-sans); font-weight: 500;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  padding: 8px 18px; border-radius: var(--radius-sm);
+  font-size: 0.82rem; font-family: var(--font-sans); font-weight: 500;
   cursor: pointer; display: flex; align-items: center; gap: 8px;
   transition: all var(--transition-base);
 }
 
 .header-settings-btn:hover {
-  background: rgba(255,255,255,0.12);
-  color: var(--text-on-dark);
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+  border-color: var(--gray-300);
 }
 
 .header-settings-btn i { font-size: 0.75rem; }
@@ -206,7 +221,6 @@ main {
 .section-header p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
 
 .muted { font-size: 0.85rem; color: var(--text-muted); }
-
 
 .input-area { position: relative; margin-bottom: 1rem; }
 
@@ -288,7 +302,6 @@ textarea:focus {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
-
 
 .card {
   background: var(--bg-surface);
@@ -531,7 +544,6 @@ textarea:focus {
 
 .upload-actions { margin-top: 1.25rem; display: flex; align-items: center; gap: 14px; }
 
-
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -665,7 +677,6 @@ textarea:focus {
 .eval-stat-fp { color: var(--color-danger);  font-weight: 600; }
 .eval-stat-fn { color: var(--color-warning); font-weight: 600; }
 
-
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(15,15,18,0.45); backdrop-filter: blur(6px);
@@ -743,7 +754,6 @@ textarea:focus {
   display: flex; justify-content: flex-end; align-items: center;
   gap: 10px; padding: 18px 24px; border-top: 1px solid var(--border-light);
 }
-
 
 @media (max-width: 768px) {
   .results-columns { grid-template-columns: 1fr; }
