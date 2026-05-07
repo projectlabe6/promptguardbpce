@@ -3,7 +3,12 @@ from __future__ import annotations
 import os
 from typing import List, Optional
 
-from transformers import Pipeline, pipeline
+from transformers import (
+    AutoModelForTokenClassification,
+    AutoTokenizer,
+    Pipeline,
+    pipeline,
+)
 
 from app.schemas.entity import Entity
 
@@ -30,13 +35,26 @@ _pii_pipeline: Optional[Pipeline] = None
 def _load_pii_pipeline() -> Pipeline:
     """Charge le pipeline NER en lazy loading."""
     global _pii_pipeline
+
     if _pii_pipeline is None:
         print(f"[NER-PII] Chargement du modèle depuis : {MODEL_PATH}")
+
+        tokenizer = AutoTokenizer.from_pretrained(
+            "camembert-base",
+            use_fast=True,
+        )
+
+        model = AutoModelForTokenClassification.from_pretrained(
+            MODEL_PATH,
+        )
+
         _pii_pipeline = pipeline(
             "token-classification",
-            model=MODEL_PATH,
+            model=model,
+            tokenizer=tokenizer,
             aggregation_strategy="simple",
         )
+
     return _pii_pipeline
 
 
@@ -49,6 +67,7 @@ def detect_entities_pii(text: str) -> List[Entity]:
     raw = ner(text)
 
     entities: List[Entity] = []
+
     for ent in raw:
         label = ent.get("entity_group", "")
         ent_type = LABEL_MAP.get(label, f"PII_{label}")
