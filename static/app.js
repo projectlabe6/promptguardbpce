@@ -3,7 +3,7 @@ const inputText      = document.getElementById("input-text");
 const results        = document.getElementById("results");
 const badgeDecision  = document.getElementById("badge-decision");
 const riskScore      = document.getElementById("risk-score");
-const processingTime = document.getElementById("processing-time");
+const executionTime  = document.getElementById("execution-time");
 const maskedText     = document.getElementById("masked-text");
 const entitiesBody   = document.getElementById("entities-body");
 const noEntities     = document.getElementById("no-entities");
@@ -57,7 +57,7 @@ function renderResults(data) {
   badgeDecision.textContent = data.decision;
   badgeDecision.className   = "badge " + data.decision;
   riskScore.textContent     = data.risk_score.toFixed(2) + "%";
-  processingTime.textContent = (data.metadata?.processing_time_ms ?? "—") + " ms";
+  executionTime.textContent = data.execution_time_ms != null ? data.execution_time_ms + " ms" : "—";
 
   maskedText.innerHTML = highlightPlaceholders(escapeHtml(data.sanitized_text));
 
