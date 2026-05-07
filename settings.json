@@ -13,7 +13,15 @@
       "PII_PERSON": 0.40,
       "PII_ORGANISATION": 0.20,
       "PII_LOCATION": 0.15,
-      "PII_MISC": 0.10
+      "PII_MISC": 0.10,
+      "MED_PATIENT": 0.85,
+      "MED_AGE": 0.30,
+      "MED_MALADIE": 0.50,
+      "MED_SYMPTOMES": 0.40,
+      "MED_MEDICAMENT": 0.45,
+      "MED_EXAMEN": 0.35,
+      "MED_ACTE_MEDICAL": 0.35,
+      "MED_TRAITEMENT": 0.40
     }
   },
   "masking": {
@@ -26,7 +34,15 @@
       "PII_PERSON": "[PERSON]",
       "PII_ORGANISATION": "[ORG]",
       "PII_LOCATION": "[LOCATION]",
-      "PII_MISC": "[MISC]"
+      "PII_MISC": "[MISC]",
+      "MED_PATIENT": "[PATIENT]",
+      "MED_AGE": "[AGE]",
+      "MED_MALADIE": "[MALADIE]",
+      "MED_SYMPTOMES": "[SYMPTOMES]",
+      "MED_MEDICAMENT": "[MEDICAMENT]",
+      "MED_EXAMEN": "[EXAMEN]",
+      "MED_ACTE_MEDICAL": "[ACTE_MEDICAL]",
+      "MED_TRAITEMENT": "[TRAITEMENT]"
     },
     "block_message": "[BLOCKED] Le contenu contient des informations trop sensibles."
   },

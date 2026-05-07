@@ -1,3 +1,5 @@
+import time
+
 from app.pipeline.decision_engine import compute_decision
 from app.pipeline.entity_fusion import fuse_entities
 from app.pipeline.masking_engine import apply_masking
@@ -8,6 +10,8 @@ from app.schemas.sanitize import SanitizeResponse
 
 
 def run_pipeline(text: str) -> SanitizeResponse:
+    t_start = time.perf_counter()
+
     entities_rules = detect_entities(text)
     entities_pii = detect_entities_pii(text)
     entities_medical = detect_entities_medical(text)
@@ -17,10 +21,15 @@ def run_pipeline(text: str) -> SanitizeResponse:
     decision, risk_score = compute_decision(all_entities)
     sanitized_text = apply_masking(text, all_entities, decision)
 
+    processing_time_ms = round((time.perf_counter() - t_start) * 1000)
+
     return SanitizeResponse(
         decision=decision,
         risk_score=risk_score,
         sanitized_text=sanitized_text,
         entities=all_entities,
-        metadata={"entity_count": len(all_entities)},
+        metadata={
+            "entity_count": len(all_entities),
+            "processing_time_ms": processing_time_ms,
+        },
     )
