@@ -1,4 +1,5 @@
 import json
+import traceback
 
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse
@@ -29,10 +30,12 @@ async def health():
 @router.post("/sanitize", response_model=SanitizeResponse)
 async def sanitize(request: SanitizeRequest):
     try:
-        return run_pipeline(request.text)
+        result = run_pipeline(request.text)
+        print("PIPELINE RESULT:", result)
+        return result
     except Exception as e:
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @router.post("/sanitize-file", response_model=SanitizeResponse)
 async def sanitize_file(file: UploadFile = File(...)):
