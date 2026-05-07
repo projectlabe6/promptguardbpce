@@ -79,6 +79,17 @@
           </div>
         </div>
       </div>
+    </section>
+
+      <section class="results-section" id="results" hidden>
+        <div class="decision-bar">
+          <span class="label">Décision</span>
+          <span id="badge-decision" class="badge"></span>
+          <span class="label">Score de risque</span>
+          <span id="risk-score"></span>
+          <span class="label">Temps d'exécution</span>
+          <span id="execution-time"></span>
+        </div>
 
       <div class="results-columns">
         <div class="card">
@@ -100,8 +111,61 @@
             <div id="entities-container"></div>
           </div>
         </div>
+      </section>
+
+      <!-- Section évaluation -->
+    <section class="input-section">
+      <label for="input-dataset">Évaluer sur un dataset JSON</label>
+      <div class="file-row">
+        <input type="file" id="input-dataset" accept=".json" />
+        <button id="btn-evaluate">Lancer l'évaluation</button>
       </div>
-    </div>
+    </section>
+
+    <section id="eval-results" hidden>
+
+      <!-- Métriques globales -->
+      <div class="metrics-bar">
+        <div class="metric-card">
+          <span class="metric-label">Cas testés</span>
+          <span id="eval-total" class="metric-value"></span>
+          <span class="metric-hint">Nombre de textes analysés</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Précision</span>
+          <span id="eval-precision" class="metric-value"></span>
+          <span class="metric-hint">Entités détectées qui sont correctes</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Rappel</span>
+          <span id="eval-recall" class="metric-value"></span>
+          <span class="metric-hint">Entités attendues qui ont été trouvées</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Score F1</span>
+          <span id="eval-f1" class="metric-value"></span>
+          <span class="metric-hint">Équilibre entre précision et rappel</span>
+        </div>
+      </div>
+
+      <!-- Légende -->
+      <div class="legend">
+        <span class="legend-item tp">✔ Vrai positif — entité correctement détectée</span>
+        <span class="legend-item fp">✘ Faux positif — entité détectée à tort</span>
+        <span class="legend-item fn">◯ Faux négatif — entité manquée</span>
+      </div>
+
+      <!-- Résultats par cas -->
+      <div class="entities-section">
+        <h2>Résultats par cas</h2>
+        <div id="eval-cases"></div>
+      </div>
+
+    </section>
+
+
+    </main>
+  </div>
 
     <div class="empty-state-container" id="emptyState">
       <div class="card">

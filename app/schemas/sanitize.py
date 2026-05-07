@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -15,3 +15,4 @@ class SanitizeResponse(BaseModel):
     sanitized_text: str
     entities: List[Entity] = Field(default_factory=list)
     metadata: Dict[str, Any] = Field(default_factory=dict)
+    execution_time_ms: Optional[float] = None

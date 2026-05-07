@@ -57,6 +57,35 @@ document.addEventListener("DOMContentLoaded", () => {
       charCount.textContent = inputText.value.length.toLocaleString("fr-FR");
     });
   }
+});
+
+function renderResults(data) {
+  results.hidden = false;
+
+  badgeDecision.textContent = data.decision;
+  badgeDecision.className   = "badge " + data.decision;
+  riskScore.textContent     = data.risk_score.toFixed(2) + "%";
+  executionTime.textContent = data.execution_time_ms != null ? data.execution_time_ms + " ms" : "—";
+
+  maskedText.innerHTML = highlightPlaceholders(escapeHtml(data.sanitized_text));
+
+  entitiesBody.innerHTML = "";
+  if (data.entities.length === 0) {
+    entitiesTable.hidden = true;
+    noEntities.hidden    = false;
+  } else {
+    entitiesTable.hidden = false;
+    noEntities.hidden    = true;
+    data.entities.forEach((e) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><strong>${escapeHtml(e.type)}</strong></td>
+        <td><code>${escapeHtml(e.value)}</code></td>
+        <td>${e.start} – ${e.end}</td>
+        <td>${(e.confidence * 100).toFixed(0)}%</td>
+        <td>${escapeHtml(e.source)}</td>
+      `;
+      entitiesBody.appendChild(row);
 
 
   if (copyBtn && maskedText) {
@@ -401,6 +430,82 @@ document.addEventListener("DOMContentLoaded", () => {
       button.disabled = false;
     }
   }
+});
+    
+btnEvaluate.addEventListener("click", async () => {
+  const file = inputDataset.files[0];
+  if (!file) { alert("Sélectionne un fichier JSON."); return; }
+
+  btnEvaluate.textContent = "Évaluation en cours...";
+  btnEvaluate.disabled = true;
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch("/evaluate", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    renderEvalResults(data);
+  } catch {
+    alert("Erreur lors de l'évaluation.");
+  } finally {
+    btnEvaluate.textContent = "Lancer l'évaluation";
+    btnEvaluate.disabled = false;
+  }
+});
+
+function renderEvalResults(data) {
+  evalResults.hidden = false;
+
+  evalTotal.textContent     = data.total_cases;
+  evalPrecision.textContent = (data.global_precision * 100).toFixed(1) + "%";
+  evalRecall.textContent    = (data.global_recall * 100).toFixed(1) + "%";
+  evalF1.textContent        = (data.global_f1 * 100).toFixed(1) + "%";
+
+  const evalCases = document.getElementById("eval-cases");
+  evalCases.innerHTML = "";
+
+  data.cases.forEach((c) => {
+    const detected = c.detected_entities.map((e) => e.value.toLowerCase());
+    const expected = c.expected_entities.map((e) => e.value.toLowerCase());
+
+    const card = document.createElement("div");
+    card.className = "eval-case";
+    card.innerHTML = `
+      <div class="eval-case-header">
+        <span class="eval-case-id">${escapeHtml(c.id)}</span>
+        <div class="eval-case-scores">
+          <span><span class="badge ${c.decision}">${c.decision}</span></span>
+          <span>Score : ${c.risk_score.toFixed(1)}%</span>
+          <span>F1 : <strong>${(c.f1 * 100).toFixed(1)}%</strong></span>
+          <span style="color:#065f46">✔ ${c.true_positives}</span>
+          <span style="color:#991b1b">✘ ${c.false_positives}</span>
+          <span style="color:#92400e">◯ ${c.false_negatives}</span>
+        </div>
+      </div>
+      <div class="eval-case-text">${escapeHtml(c.text)}</div>
+      <div class="eval-entities">
+        <div class="eval-col">
+          <h3>Entités détectées</h3>
+          <div>${c.detected_entities.map((e) => {
+            const correct = expected.includes(e.value.toLowerCase());
+            return `<span class="eval-tag ${correct ? "tp" : "fp"}">${escapeHtml(e.type)} : ${escapeHtml(e.value)}</span>`;
+          }).join("") || "<span style='color:#9ca3af;font-size:0.85rem'>Aucune</span>"}</div>
+        </div>
+        <div class="eval-col">
+          <h3>Entités attendues</h3>
+          <div>${c.expected_entities.map((e) => {
+            const found = detected.includes(e.value.toLowerCase());
+            return `<span class="eval-tag ${found ? "tp" : "fn"}">${escapeHtml(e.type)} : ${escapeHtml(e.value)}</span>`;
+          }).join("") || "<span style='color:#9ca3af;font-size:0.85rem'>Aucune attendue</span>"}</div>
+        </div>
+      </div>
+    `;
+    evalCases.appendChild(card);
+  });
+}
 
   function highlightPlaceholders(text) {
     return text.replace(/(&lt;[A-Z_]+&gt;)/g, '<span class="placeholder">$1</span>');
